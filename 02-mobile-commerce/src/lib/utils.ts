@@ -26,6 +26,3 @@ export function formatDeliveryTime(minutes: number) {
   return remainingMinutes > 0 ? `${hours}시간 ${remainingMinutes}분` : `${hours}시간`;
 }
 
-export function getRandomRating() {
-  return (Math.random() * (5 - 4.0) + 4.0).toFixed(1);
-}

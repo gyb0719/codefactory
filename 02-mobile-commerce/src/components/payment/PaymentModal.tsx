@@ -62,16 +62,12 @@ const PaymentModal = ({
       // 실제 토스페이먼츠 API 시뮬레이션
       await new Promise(resolve => setTimeout(resolve, 2000));
       
-      // 성공 확률 90%로 시뮬레이션
-      if (Math.random() < 0.9) {
-        setPaymentStep('success');
-        setTimeout(() => {
-          onPaymentSuccess();
-          onClose();
-        }, 2000);
-      } else {
-        throw new Error('결제 실패');
-      }
+      // 성공으로 시뮬레이션
+      setPaymentStep('success');
+      setTimeout(() => {
+        onPaymentSuccess();
+        onClose();
+      }, 2000);
     } catch (error) {
       setPaymentStep('error');
     }

@@ -60,118 +60,170 @@ export default function HomePage() {
 
   // 홈 컨텐츠
   const HomeContent = () => (
-    <div className="pb-20">
-      {/* 헤더 */}
-      <div className="bg-gradient-to-r from-orange-500 to-pink-500 text-white p-6 pb-8">
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center gap-2">
-            <ShoppingBag className="w-8 h-8" />
+    <div className="pb-20 min-h-screen">
+      {/* iOS 스타일 헤더 */}
+      <div className="ios-nav-bar ios-safe-area-top px-4">
+        <div className="flex items-center justify-between w-full max-w-screen-xl mx-auto">
+          {/* 로고 & 타이틀 */}
+          <div className="flex items-center gap-3">
+            <div className="w-8 h-8 rounded-lg flex items-center justify-center" 
+                 style={{ backgroundColor: 'var(--ios-blue)' }}>
+              <ShoppingBag className="w-5 h-5 text-white" />
+            </div>
             <div>
-              <h1 className="text-2xl font-bold">퀵마트</h1>
-              <p className="text-sm opacity-90">30분 내 초고속 배송</p>
+              <h1 className="ios-title-2 text-[var(--text-primary)]">퀵마트</h1>
             </div>
           </div>
-          <div className="flex items-center gap-3">
-            <button className="p-2 bg-white/20 rounded-full">
-              <Bell className="w-5 h-5" />
+          
+          {/* 우측 액션 버튼들 */}
+          <div className="flex items-center gap-2">
+            <button className="w-8 h-8 rounded-full flex items-center justify-center"
+                    style={{ transition: 'var(--transition-fast)' }}>
+              <Bell className="w-5 h-5 text-[var(--text-secondary)]" />
             </button>
-            <button className="p-2 bg-white/20 rounded-full">
-              <MapPin className="w-5 h-5" />
+            <button className="w-8 h-8 rounded-full flex items-center justify-center"
+                    style={{ transition: 'var(--transition-fast)' }}>
+              <MapPin className="w-5 h-5 text-[var(--text-secondary)]" />
             </button>
           </div>
         </div>
-        
-        {/* 검색바 */}
+      </div>
+
+      {/* 검색창 */}
+      <div className="px-4 py-3">
         <div className="relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gray-400" />
+          <div className="absolute left-3 top-1/2 transform -translate-y-1/2 z-10">
+            <Search className="w-5 h-5 text-[var(--text-secondary)]" />
+          </div>
           <input
             type="text"
             placeholder="30분 내 배송 가능한 상품 검색"
-            className="w-full pl-10 pr-4 py-3 bg-white text-gray-900 rounded-2xl focus:outline-none focus:ring-2 focus:ring-orange-300"
+            className="ios-input pl-10"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
         </div>
       </div>
 
-      {/* 퀵 액세스 카테고리 */}
-      <div className="px-6 -mt-4 mb-6">
-        <div className="bg-white rounded-2xl shadow-lg p-4">
+      {/* iOS 스타일 카테고리 섹션 */}
+      <div className="px-4 mb-6">
+        <div className="ios-card p-4">
+          <h2 className="ios-headline mb-4 text-[var(--text-primary)]">카테고리</h2>
           <div className="grid grid-cols-5 gap-3">
             {categories.map((category) => (
               <button
                 key={category.id}
                 onClick={() => setSelectedCategory(category.name)}
-                className={`flex flex-col items-center gap-2 p-3 rounded-2xl transition-all ${
+                className={`flex flex-col items-center gap-2 p-3 rounded-xl transition-all ${
                   selectedCategory === category.name
-                    ? 'bg-orange-100 text-orange-600'
-                    : 'text-gray-600 hover:bg-gray-50'
+                    ? 'bg-[var(--ios-blue)] shadow-md'
+                    : 'bg-[var(--background-secondary)]'
                 }`}
+                style={{ transition: 'var(--transition-fast)' }}
               >
                 <span className="text-2xl">{category.icon}</span>
-                <span className="text-xs font-medium">{category.name}</span>
+                <span className={`text-xs font-medium ${
+                  selectedCategory === category.name
+                    ? 'text-white'
+                    : 'text-[var(--text-secondary)]'
+                }`}>
+                  {category.name}
+                </span>
               </button>
             ))}
           </div>
         </div>
       </div>
 
-      {/* 활성 주문 배송 추적 */}
+      {/* 프리미엄 배송 추적 */}
       {hasActiveOrder && (
-        <div className="px-6 mb-6">
-          <DeliveryTracker orderId={currentOrderId} />
+        <div className="px-4 mb-8">
+          <div className="glass rounded-3xl p-1">
+            <DeliveryTracker orderId={currentOrderId} />
+          </div>
         </div>
       )}
 
-      {/* 빠른 배송 배너 */}
+      {/* iOS 스타일 배송 프로모션 배너 */}
       {!hasActiveOrder && (
-        <div className="px-6 mb-6">
-          <div className="bg-gradient-to-r from-green-400 to-blue-500 rounded-2xl p-4 text-white">
-            <div className="flex items-center gap-3">
-              <div className="bg-white/20 p-2 rounded-full">
-                <Zap className="w-6 h-6" />
+        <div className="px-4 mb-6">
+          <div className="ios-card p-4" style={{ backgroundColor: 'var(--ios-green)', color: 'white' }}>
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 rounded-full bg-white/20 flex items-center justify-center">
+                <Zap className="w-6 h-6 text-white" />
               </div>
-              <div>
-                <h3 className="font-bold">지금 주문하면</h3>
-                <p className="text-sm opacity-90">오후 3시 30분까지 도착!</p>
+              <div className="flex-1">
+                <h3 className="ios-headline text-white mb-1">지금 주문하면</h3>
+                <p className="ios-subhead text-white/80">오후 3시 30분까지 무료 배송!</p>
+              </div>
+              <div className="text-right">
+                <div className="ios-title-2 text-white font-bold">FREE</div>
+                <div className="ios-caption text-white/70">배송비</div>
               </div>
             </div>
           </div>
         </div>
       )}
 
-      {/* 인기 상품 */}
-      <div className="px-6 mb-6">
-        <h2 className="text-lg font-bold text-gray-900 mb-3">🔥 지금 인기</h2>
-        <div className="flex gap-3 overflow-x-auto pb-2">
-          {popularProducts.map((product) => (
-            <div key={product.id} className="flex-shrink-0 w-64">
-              <ProductCard 
-                product={product} 
-                variant="grid"
-                className="h-full"
-              />
+      {/* iOS 스타일 인기 상품 */}
+      <div className="px-4 mb-6">
+        <div className="ios-card p-4">
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <h2 className="ios-headline text-[var(--text-primary)]">인기 상품</h2>
+              <p className="ios-subhead">실시간 베스트셀러</p>
             </div>
-          ))}
+          </div>
+          <div className="flex gap-3 overflow-x-auto pb-2 -mr-4 pr-4">
+            {popularProducts.map((product) => (
+              <div 
+                key={product.id} 
+                className="flex-shrink-0 w-56"
+              >
+                <div className="bg-[var(--background-secondary)] rounded-xl overflow-hidden">
+                  <ProductCard 
+                    product={product} 
+                    variant="grid"
+                    className="h-full border-0 shadow-none bg-transparent"
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
 
-      {/* 오늘의 특가 */}
-      <div className="px-6 mb-6">
-        <div className="flex items-center justify-between mb-3">
-          <h2 className="text-lg font-bold text-gray-900">⚡ 오늘의 특가</h2>
-          <span className="text-sm text-red-600 font-medium">
-            {Math.floor(Math.random() * 10) + 1}시간 남음
-          </span>
-        </div>
-        <div className="grid grid-cols-2 gap-3">
-          {dailyDeals.slice(0, 4).map((product) => (
-            <ProductCard 
-              key={product.id}
-              product={product} 
-              variant="grid"
-            />
-          ))}
+      {/* iOS 스타일 오늘의 특가 */}
+      <div className="px-4 mb-6">
+        <div className="ios-card p-4">
+          <div className="flex items-center justify-between mb-4">
+            <div>
+              <h2 className="ios-headline text-[var(--text-primary)]">오늘의 특가</h2>
+              <p className="ios-subhead">한정 수량 - 놓치면 안 돼요!</p>
+            </div>
+            <div className="text-right">
+              <div className="bg-[var(--ios-red)] px-3 py-2 rounded-lg">
+                <div className="ios-caption text-white">남은 시간</div>
+                <div className="ios-subhead text-white font-semibold">
+                  2:45
+                </div>
+              </div>
+            </div>
+          </div>
+          
+          <div className="grid grid-cols-2 gap-3">
+            {dailyDeals.slice(0, 4).map((product) => (
+              <div key={product.id}>
+                <div className="bg-[var(--background-secondary)] rounded-xl overflow-hidden">
+                  <ProductCard 
+                    product={product} 
+                    variant="grid"
+                    className="border-0 shadow-none bg-transparent"
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
     </div>
@@ -355,25 +407,15 @@ export default function HomePage() {
   );
 
   return (
-    <div className="h-screen bg-gray-50 overflow-hidden">
-      {/* 메인 콘텐츠 */}
+    <div className="h-screen relative overflow-hidden bg-[var(--background-grouped)]">
       <div className="h-full overflow-y-auto">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeTab}
-            initial={{ opacity: 0, x: 20 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -20 }}
-            transition={{ duration: 0.2 }}
-            className="h-full"
-          >
-            {renderContent()}
-          </motion.div>
-        </AnimatePresence>
+        {renderContent()}
       </div>
 
-      {/* 하단 네비게이션 */}
-      <BottomNav activeTab={activeTab} onTabChange={setActiveTab} />
+      {/* 프리미엄 하단 네비게이션 */}
+      <div className="absolute bottom-0 left-0 right-0 z-50">
+        <BottomNav activeTab={activeTab} onTabChange={setActiveTab} />
+      </div>
       
       {/* 결제 모달 */}
       <PaymentModal

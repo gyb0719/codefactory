@@ -1,20 +1,14 @@
 'use client';
 
 import { useState } from 'react';
-import { motion } from 'framer-motion';
-import Image from 'next/image';
 import { 
   Heart, 
   ShoppingCart, 
   Star, 
-  Clock, 
   Truck,
-  Zap,
-  Plus,
-  Minus
 } from 'lucide-react';
 import { Product } from '@/types/product';
-import { formatPrice, formatDeliveryTime, formatDiscount } from '@/lib/utils';
+import { formatPrice, formatDeliveryTime } from '@/lib/utils';
 import { useCartStore } from '@/store/cartStore';
 import { cn } from '@/lib/utils';
 
@@ -34,7 +28,6 @@ const ProductCard = ({
   onToggleFavorite 
 }: ProductCardProps) => {
   const [isFavorite, setIsFavorite] = useState(false);
-  const [imageError, setImageError] = useState(false);
   const { addItem, getItemQuantity } = useCartStore();
   
   const quantity = getItemQuantity(product.id);
@@ -49,183 +42,170 @@ const ProductCard = ({
     onToggleFavorite?.(product);
   };
 
-  const isSwipeVariant = variant === 'swipe';
-  const isListVariant = variant === 'list';
+  if (variant === 'list') {
+    return (
+      <div className={cn("ios-card p-4 mb-3", className)}>
+        <div className="flex items-center gap-4">
+          {/* 상품 이미지 */}
+          <div className="w-16 h-16 rounded-lg bg-[var(--background-secondary)] flex items-center justify-center">
+            <ShoppingCart className="w-8 h-8 text-[var(--text-tertiary)]" />
+          </div>
+          
+          {/* 상품 정보 */}
+          <div className="flex-1 min-w-0">
+            <h3 className="ios-callout font-medium text-[var(--text-primary)] truncate">
+              {product.name}
+            </h3>
+            <p className="ios-caption text-[var(--text-secondary)] mt-1">
+              {product.category}
+            </p>
+            
+            <div className="flex items-center gap-2 mt-2">
+              <div className="flex items-center gap-1">
+                <Star className="w-3 h-3 fill-[var(--ios-yellow)] text-[var(--ios-yellow)]" />
+                <span className="ios-caption text-[var(--text-secondary)]">
+                  {product.rating.toFixed(1)}
+                </span>
+              </div>
+              <span className="ios-caption text-[var(--text-tertiary)]">•</span>
+              <div className="flex items-center gap-1">
+                <Truck className="w-3 h-3 text-[var(--text-tertiary)]" />
+                <span className="ios-caption text-[var(--text-tertiary)]">
+                  {formatDeliveryTime(product.deliveryTime)}
+                </span>
+              </div>
+            </div>
+          </div>
+          
+          {/* 가격 및 액션 */}
+          <div className="text-right">
+            <div className="ios-callout font-semibold text-[var(--text-primary)]">
+              {formatPrice(product.price)}
+            </div>
+            {product.originalPrice && product.originalPrice > product.price && (
+              <div className="ios-caption text-[var(--text-tertiary)] line-through">
+                {formatPrice(product.originalPrice)}
+              </div>
+            )}
+            <button 
+              onClick={handleAddToCart}
+              className="ios-button-primary mt-2 px-3 py-1 text-sm"
+            >
+              담기
+            </button>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
+  // Grid 버전 (기본)
   return (
-    <motion.div
-      className={cn(
-        'bg-white rounded-3xl shadow-lg overflow-hidden',
-        isSwipeVariant && 'w-full max-w-sm mx-auto h-[600px]',
-        isListVariant && 'flex',
-        !isSwipeVariant && !isListVariant && 'h-full',
-        className
+    <div className={cn("ios-card p-4 relative", className)}>
+      {/* 찜하기 버튼 */}
+      <button 
+        onClick={handleToggleFavorite}
+        className="absolute top-2 right-2 z-10 w-8 h-8 rounded-full bg-white/80 flex items-center justify-center"
+        style={{ transition: 'var(--transition-fast)' }}
+      >
+        <Heart 
+          className={cn(
+            "w-4 h-4 transition-all",
+            isFavorite 
+              ? "text-[var(--ios-red)] fill-current" 
+              : "text-[var(--text-secondary)]"
+          )}
+          style={{ transition: 'var(--transition-fast)' }}
+        />
+      </button>
+
+      {/* 상품 이미지 */}
+      <div className="aspect-square rounded-lg bg-[var(--background-secondary)] mb-3 flex items-center justify-center">
+        <ShoppingCart className="w-12 h-12 text-[var(--text-tertiary)]" />
+      </div>
+
+      {/* 브랜드 */}
+      {product.brand && (
+        <div className="ios-caption text-[var(--text-secondary)] mb-1">
+          {product.brand}
+        </div>
       )}
-      whileHover={{ y: isSwipeVariant ? 0 : -4 }}
-      transition={{ type: "spring", stiffness: 300, damping: 30 }}
-    >
-      {/* 이미지 섹션 */}
-      <div className={cn(
-        'relative overflow-hidden',
-        isSwipeVariant && 'h-80',
-        isListVariant && 'w-32 h-32',
-        !isSwipeVariant && !isListVariant && 'h-48'
-      )}>
-        {/* 플레이스홀더 이미지 */}
-        <div className="absolute inset-0 bg-gradient-to-br from-orange-100 to-pink-100 flex items-center justify-center">
-          <ShoppingCart className="w-12 h-12 text-gray-400" />
+
+      {/* 상품명 */}
+      <h3 className="ios-subhead font-medium text-[var(--text-primary)] line-clamp-2 mb-2">
+        {product.name}
+      </h3>
+
+      {/* 평점 & 리뷰 */}
+      <div className="flex items-center gap-1 mb-2">
+        <div className="flex items-center gap-1">
+          {[...Array(5)].map((_, i) => (
+            <Star 
+              key={i}
+              className={cn(
+                "w-3 h-3",
+                i < Math.floor(product.rating) 
+                  ? "text-[var(--ios-yellow)] fill-current" 
+                  : "text-[var(--ios-gray4)]"
+              )}
+            />
+          ))}
+        </div>
+        <span className="ios-caption text-[var(--text-secondary)] ml-1">
+          {product.rating.toFixed(1)} ({product.reviewCount || 0})
+        </span>
+      </div>
+
+      {/* 가격 */}
+      <div className="mb-3">
+        <div className="flex items-end gap-2">
+          <span className="ios-callout font-semibold text-[var(--text-primary)]">
+            {formatPrice(product.price)}
+          </span>
+          {product.originalPrice && product.originalPrice > product.price && (
+            <span className="ios-caption text-[var(--text-tertiary)] line-through">
+              {formatPrice(product.originalPrice)}
+            </span>
+          )}
         </div>
         
-        {/* 할인 배지 */}
-        {product.discount && (
-          <div className="absolute top-3 left-3 z-10">
-            <div className="bg-red-500 text-white px-2 py-1 rounded-full text-xs font-bold">
-              -{product.discount}%
-            </div>
+        {/* 할인율 */}
+        {product.originalPrice && product.originalPrice > product.price && (
+          <div className="flex items-center gap-2 mt-1">
+            <span className="inline-block px-2 py-1 bg-[var(--ios-red)] text-white rounded text-xs font-semibold">
+              {Math.round((1 - product.price / product.originalPrice) * 100)}% OFF
+            </span>
           </div>
         )}
+      </div>
 
-        {/* 빠른 배송 배지 */}
+      {/* 배송 정보 */}
+      <div className="flex items-center gap-1 mb-3">
+        <Truck className="w-3 h-3 text-[var(--text-secondary)]" />
+        <span className="ios-caption text-[var(--text-secondary)]">
+          {formatDeliveryTime(product.deliveryTime)}
+        </span>
         {product.deliveryTime <= 30 && (
-          <div className="absolute top-3 right-3 z-10">
-            <div className="bg-green-500 text-white px-2 py-1 rounded-full text-xs font-bold flex items-center gap-1">
-              <Zap className="w-3 h-3" />
-              빠른배송
-            </div>
-          </div>
+          <span className="ios-caption text-[var(--ios-green)] font-medium ml-1">
+            무료배송
+          </span>
         )}
-
-        {/* 찜하기 버튼 */}
-        <button
-          onClick={handleToggleFavorite}
-          className="absolute top-3 right-3 w-8 h-8 bg-white/90 rounded-full flex items-center justify-center shadow-md z-10"
-        >
-          <Heart 
-            className={cn(
-              'w-4 h-4 transition-colors',
-              isFavorite ? 'text-red-500 fill-current' : 'text-gray-600'
-            )}
-          />
-        </button>
       </div>
 
-      {/* 컨텐츠 섹션 */}
-      <div className={cn(
-        'p-4 flex-1',
-        isSwipeVariant && 'flex flex-col justify-between'
-      )}>
-        <div className="space-y-2">
-          {/* 브랜드 */}
-          <p className="text-xs text-gray-500 font-medium uppercase">
-            {product.brand}
-          </p>
-
-          {/* 상품명 */}
-          <h3 className={cn(
-            'font-bold text-gray-900 line-clamp-2',
-            isSwipeVariant ? 'text-xl' : 'text-sm'
-          )}>
-            {product.name}
-          </h3>
-
-          {/* 설명 */}
-          {isSwipeVariant && (
-            <p className="text-gray-600 text-sm line-clamp-3 leading-relaxed">
-              {product.description}
-            </p>
-          )}
-
-          {/* 평점 및 리뷰 */}
-          <div className="flex items-center gap-2">
-            <div className="flex items-center gap-1">
-              <Star className="w-4 h-4 text-yellow-400 fill-current" />
-              <span className="text-sm font-semibold">{product.rating}</span>
-            </div>
-            <span className="text-xs text-gray-500">
-              ({product.reviewCount.toLocaleString()})
-            </span>
-          </div>
-
-          {/* 특징 태그 */}
-          {isSwipeVariant && (
-            <div className="flex flex-wrap gap-1">
-              {product.features.slice(0, 3).map((feature, index) => (
-                <span
-                  key={index}
-                  className="px-2 py-1 bg-blue-50 text-blue-700 text-xs rounded-full"
-                >
-                  {feature}
-                </span>
-              ))}
-            </div>
-          )}
-        </div>
-
-        {/* 가격 및 액션 */}
-        <div className="space-y-3 mt-4">
-          {/* 가격 */}
-          <div className="flex items-end gap-2">
-            <span className={cn(
-              'font-bold text-orange-600',
-              isSwipeVariant ? 'text-2xl' : 'text-lg'
-            )}>
-              {formatPrice(product.price)}
-            </span>
-            {product.originalPrice && (
-              <span className="text-sm text-gray-400 line-through">
-                {formatPrice(product.originalPrice)}
-              </span>
-            )}
-          </div>
-
-          {/* 배송 정보 */}
-          <div className="flex items-center gap-2 text-xs text-gray-600">
-            <Truck className="w-4 h-4" />
-            <span>{formatDeliveryTime(product.deliveryTime)}</span>
-            {product.deliveryFee === 0 ? (
-              <span className="text-green-600 font-medium">무료배송</span>
-            ) : (
-              <span>배송비 {formatPrice(product.deliveryFee)}</span>
-            )}
-          </div>
-
-          {/* 장바구니 버튼 */}
-          {quantity > 0 ? (
-            <div className="flex items-center justify-center gap-3">
-              <button
-                onClick={() => useCartStore.getState().updateQuantity(
-                  useCartStore.getState().items.find(item => item.product.id === product.id)?.id || '',
-                  quantity - 1
-                )}
-                className="w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center"
-              >
-                <Minus className="w-4 h-4" />
-              </button>
-              <span className="font-bold text-lg min-w-[2rem] text-center">
-                {quantity}
-              </span>
-              <button
-                onClick={handleAddToCart}
-                className="w-10 h-10 bg-orange-500 text-white rounded-full flex items-center justify-center"
-              >
-                <Plus className="w-4 h-4" />
-              </button>
-            </div>
-          ) : (
-            <button
-              onClick={handleAddToCart}
-              className={cn(
-                'w-full bg-gradient-to-r from-orange-500 to-pink-500 text-white rounded-2xl font-semibold transition-all duration-200 hover:shadow-lg active:scale-95 flex items-center justify-center gap-2',
-                isSwipeVariant ? 'py-4 text-lg' : 'py-3'
-              )}
-            >
-              <ShoppingCart className="w-5 h-5" />
-              장바구니 담기
-            </button>
-          )}
-        </div>
-      </div>
-    </motion.div>
+      {/* 장바구니 버튼 */}
+      <button 
+        onClick={handleAddToCart}
+        className="ios-button-primary w-full flex items-center justify-center gap-2"
+      >
+        <ShoppingCart className="w-4 h-4" />
+        <span>장바구니 담기</span>
+        {quantity > 0 && (
+          <span className="bg-white/20 px-2 py-1 rounded-full text-xs">
+            {quantity}
+          </span>
+        )}
+      </button>
+    </div>
   );
 };
 

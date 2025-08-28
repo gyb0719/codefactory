@@ -1,11 +1,8 @@
 'use client';
 
-import { useState } from 'react';
-import { motion } from 'framer-motion';
 import { 
   Home, 
   Search, 
-  Heart, 
   ShoppingCart, 
   User,
   Sparkles 
@@ -26,60 +23,61 @@ const BottomNav = ({ activeTab, onTabChange }: BottomNavProps) => {
     { id: 'search', label: '검색', icon: Search },
     { id: 'swipe', label: '스와이프', icon: Sparkles },
     { id: 'cart', label: '장바구니', icon: ShoppingCart },
-    { id: 'profile', label: '내정보', icon: User },
+    { id: 'profile', label: '프로필', icon: User },
   ];
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 safe-area-pb z-50">
-      <div className="flex items-center justify-around px-2 py-1">
+    <div className="ios-tab-bar fixed bottom-0 left-0 right-0 z-50 ios-safe-area-bottom">
+      <div className="flex items-end justify-around px-2 pt-1 pb-2">
         {tabs.map((tab) => {
           const isActive = activeTab === tab.id;
           return (
             <button
               key={tab.id}
               onClick={() => onTabChange(tab.id)}
-              className="relative flex flex-col items-center p-3 min-w-[4rem]"
+              className="flex flex-col items-center min-w-[60px] py-1 px-2 relative group"
+              style={{ transition: 'all var(--transition-fast)' }}
             >
-              {/* 활성 상태 배경 */}
-              {isActive && (
-                <motion.div
-                  layoutId="activeTab"
-                  className="absolute inset-0 bg-gradient-to-r from-orange-100 to-pink-100 rounded-2xl"
-                  transition={{ type: "spring", duration: 0.5 }}
-                />
-              )}
-              
-              {/* 아이콘 */}
-              <div className="relative">
+              {/* 아이콘 컨테이너 */}
+              <div className="relative mb-1">
                 <tab.icon 
                   className={cn(
-                    'w-6 h-6 transition-colors duration-200',
+                    'w-6 h-6 transition-all',
                     isActive 
-                      ? 'text-orange-600' 
-                      : 'text-gray-400'
+                      ? 'text-[var(--ios-blue)]' 
+                      : 'text-[var(--text-secondary)]'
                   )}
+                  style={{
+                    transition: 'var(--transition-fast)'
+                  }}
                 />
                 
-                {/* 장바구니 뱃지 */}
+                {/* 장바구니 뱃지 - iOS Style */}
                 {tab.id === 'cart' && totalItems > 0 && (
-                  <motion.div
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    className="absolute -top-1 -right-1 w-5 h-5 bg-red-500 text-white rounded-full flex items-center justify-center text-xs font-bold"
+                  <div 
+                    className="absolute -top-1 -right-1 min-w-[18px] h-[18px] rounded-full flex items-center justify-center text-white text-xs font-semibold"
+                    style={{ 
+                      background: 'var(--ios-red)',
+                      fontSize: '11px'
+                    }}
                   >
                     {totalItems > 99 ? '99+' : totalItems}
-                  </motion.div>
+                  </div>
                 )}
               </div>
               
               {/* 라벨 */}
               <span 
                 className={cn(
-                  'text-xs mt-1 font-medium transition-colors duration-200',
+                  'text-xs font-regular transition-all',
                   isActive 
-                    ? 'text-orange-600' 
-                    : 'text-gray-400'
+                    ? 'text-[var(--ios-blue)]' 
+                    : 'text-[var(--text-secondary)]'
                 )}
+                style={{
+                  fontSize: '10px',
+                  transition: 'var(--transition-fast)'
+                }}
               >
                 {tab.label}
               </span>

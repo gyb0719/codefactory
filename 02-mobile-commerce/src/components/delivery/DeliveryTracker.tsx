@@ -67,8 +67,8 @@ const DeliveryTracker = ({ orderId }: DeliveryTrackerProps) => {
     const interval = setInterval(() => {
       setEstimatedTime(prev => Math.max(0, prev - 1));
       
-      // 랜덤하게 배송 상태 업데이트
-      if (Math.random() < 0.1) {
+      // 정기적으로 배송 상태 업데이트 (30초마다)
+      if (prev % 30 === 0 && prev > 0) {
         const now = new Date();
         setDeliveryStatus(prev => {
           if (prev.length < 5) {

@@ -58,9 +58,8 @@ const SwipeShop = () => {
     setCurrentIndex(0);
     setLikedProducts([]);
     setPassedProducts([]);
-    // 새로운 상품들로 셔플
-    const shuffled = [...sampleProducts].sort(() => Math.random() - 0.5);
-    setProducts(shuffled.slice(0, 5));
+    // 새로운 상품들로 로드 (고정 순서)
+    setProducts(sampleProducts.slice(0, 5));
   };
 
   const currentProduct = products[currentIndex];
