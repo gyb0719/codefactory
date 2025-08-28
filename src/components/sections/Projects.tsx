@@ -1,15 +1,12 @@
 'use client';
 
-import { useState } from 'react';
 import { motion } from 'framer-motion';
-import Image from 'next/image';
 import { ExternalLink, Github, Code2, Sparkles } from 'lucide-react';
 import { Card, CardContent } from '@/components/ui/Card';
 import Button from '@/components/ui/Button';
 import { profileData } from '@/data/profile';
 
 const Projects = () => {
-  const [activeProject, setActiveProject] = useState(0);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -71,7 +68,6 @@ const Projects = () => {
               key={index}
               variants={itemVariants}
               whileHover={{ y: -10 }}
-              onHoverStart={() => setActiveProject(index)}
             >
               <Card variant="elevated" hover className="overflow-hidden h-full">
                 {/* Project Image */}

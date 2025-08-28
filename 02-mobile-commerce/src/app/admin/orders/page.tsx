@@ -22,7 +22,8 @@ import {
   Printer,
   RefreshCw,
   ChevronDown,
-  ChevronRight
+  ChevronRight,
+  ShoppingCart
 } from 'lucide-react';
 
 // 주문 타입 정의

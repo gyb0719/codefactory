@@ -2,7 +2,6 @@
 
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import Image from 'next/image';
 import { Menu, X, Code2, Phone, Mail } from 'lucide-react';
 import Button from '@/components/ui/Button';
 import { profileData } from '@/data/profile';
