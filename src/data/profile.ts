@@ -124,13 +124,13 @@ export const profileData = {
       highlights: ["AI 추천 시스템", "실시간 상담", "30% 성능 향상"]
     },
     {
-      title: "모바일 커머스 앱",
-      description: "React Native로 개발한 크로스플랫폼 쇼핑몰 앱",
-      tech: ["React Native", "Redux", "Node.js", "MongoDB"],
+      title: "메가 카피 - 온라인 쇼핑몰",
+      description: "Next.js로 개발한 모던한 이커머스 플랫폼",
+      tech: ["Next.js", "TypeScript", "Supabase", "Tailwind CSS"],
       image: "/images/project2.jpg",
-      liveUrl: "https://commerce-app.demo",
-      githubUrl: "https://github.com/codefactory/commerce-app",
-      highlights: ["크로스플랫폼", "결제 연동", "푸시 알림"]
+      liveUrl: "https://mega-copy.vercel.app",
+      githubUrl: "https://github.com/gyb0719/mega-copy",
+      highlights: ["실시간 재고 관리", "관리자 대시보드", "PWA 지원"]
     },
     {
       title: "SaaS 대시보드",
