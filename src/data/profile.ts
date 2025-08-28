@@ -1,5 +1,5 @@
 export const profileData = {
-  name: "권용범",
+  name: "코드팩토리",
   company: "코드 팩토리",
   title: "풀스택 개발자 & AI 전문가",
   email: "gyb07190@gmail.com",
