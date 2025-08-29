@@ -11,23 +11,15 @@ import {
   Phone,
   MessageCircle
 } from 'lucide-react';
-
-interface DeliveryStatus {
-  id: string;
-  status: 'ordered' | 'preparing' | 'picked_up' | 'in_transit' | 'delivered';
-  timestamp: Date;
-  location?: string;
-  message: string;
-}
+import { useRealtimeOrder } from '@/hooks/useRealtimeOrders';
 
 interface DeliveryTrackerProps {
   orderId: string;
 }
 
 const DeliveryTracker = ({ orderId }: DeliveryTrackerProps) => {
-  const [deliveryStatus, setDeliveryStatus] = useState<DeliveryStatus[]>([]);
-  const [currentStatus, setCurrentStatus] = useState<DeliveryStatus['status']>('ordered');
-  const [estimatedTime, setEstimatedTime] = useState(25);
+  const { order, tracking, loading, error, currentStatus, estimatedTime } = useRealtimeOrder(orderId);
+  const [remainingTime, setRemainingTime] = useState(30);
   const [driverInfo] = useState({
     name: '김배달',
     phone: '010-1234-5678',
@@ -35,62 +27,48 @@ const DeliveryTracker = ({ orderId }: DeliveryTrackerProps) => {
     vehicle: '오토바이'
   });
 
-  // 실시간 배송 상태 시뮬레이션
+  // 남은 시간 계산
   useEffect(() => {
-    const initialStatus: DeliveryStatus[] = [
-      {
-        id: '1',
-        status: 'ordered',
-        timestamp: new Date(Date.now() - 15 * 60 * 1000),
-        message: '주문이 접수되었습니다'
-      },
-      {
-        id: '2',
-        status: 'preparing',
-        timestamp: new Date(Date.now() - 10 * 60 * 1000),
-        location: '퀵마트 강남점',
-        message: '상품을 준비하고 있습니다'
-      },
-      {
-        id: '3',
-        status: 'picked_up',
-        timestamp: new Date(Date.now() - 5 * 60 * 1000),
-        location: '퀵마트 강남점',
-        message: '상품이 픽업되었습니다'
-      }
-    ];
-
-    setDeliveryStatus(initialStatus);
-    setCurrentStatus('picked_up');
-
-    // 실시간 업데이트 시뮬레이션
-    const interval = setInterval(() => {
-      setEstimatedTime(prev => Math.max(0, prev - 1));
+    if (estimatedTime) {
+      const targetTime = new Date(estimatedTime).getTime();
+      const now = Date.now();
+      const diff = Math.max(0, Math.floor((targetTime - now) / 1000 / 60));
+      setRemainingTime(diff);
       
-      // 정기적으로 배송 상태 업데이트 (30초마다)
-      if (prev % 30 === 0 && prev > 0) {
-        const now = new Date();
-        setDeliveryStatus(prev => {
-          if (prev.length < 5) {
-            const newStatus: DeliveryStatus = {
-              id: (prev.length + 1).toString(),
-              status: prev.length === 3 ? 'in_transit' : 'delivered',
-              timestamp: now,
-              location: prev.length === 3 ? '배달 중' : '고객님 주소지',
-              message: prev.length === 3 ? '배달원이 고객님께 향하고 있습니다' : '배송이 완료되었습니다'
-            };
-            setCurrentStatus(newStatus.status);
-            return [...prev, newStatus];
-          }
-          return prev;
-        });
-      }
-    }, 5000);
+      const interval = setInterval(() => {
+        const now = Date.now();
+        const diff = Math.max(0, Math.floor((targetTime - now) / 1000 / 60));
+        setRemainingTime(diff);
+      }, 30000); // 30초마다 업데이트
+      
+      return () => clearInterval(interval);
+    }
+  }, [estimatedTime]);
 
-    return () => clearInterval(interval);
-  }, []);
+  if (loading) {
+    return (
+      <div className="bg-white rounded-3xl shadow-lg p-6 mb-6">
+        <div className="animate-pulse">
+          <div className="h-6 bg-gray-200 rounded w-1/3 mb-4"></div>
+          <div className="h-20 bg-gray-100 rounded-2xl mb-4"></div>
+          <div className="space-y-3">
+            <div className="h-4 bg-gray-200 rounded w-full"></div>
+            <div className="h-4 bg-gray-200 rounded w-3/4"></div>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
-  const getStatusIcon = (status: DeliveryStatus['status']) => {
+  if (error || !order) {
+    return (
+      <div className="bg-white rounded-3xl shadow-lg p-6 mb-6">
+        <p className="text-red-500">주문 정보를 불러올 수 없습니다.</p>
+      </div>
+    );
+  }
+
+  const getStatusIcon = (status: string) => {
     switch (status) {
       case 'ordered':
         return <Package className="w-5 h-5" />;
@@ -107,13 +85,9 @@ const DeliveryTracker = ({ orderId }: DeliveryTrackerProps) => {
     }
   };
 
-  const getStatusColor = (status: DeliveryStatus['status'], isCurrent: boolean) => {
+  const getStatusColor = (status: string, isCurrent: boolean) => {
     if (isCurrent) return 'bg-orange-500 text-white';
-    
-    const completedStatuses = deliveryStatus.map(s => s.status);
-    const isCompleted = completedStatuses.includes(status);
-    
-    return isCompleted ? 'bg-green-500 text-white' : 'bg-gray-200 text-gray-500';
+    return 'bg-green-500 text-white';
   };
 
   const formatTime = (date: Date) => {
@@ -128,7 +102,7 @@ const DeliveryTracker = ({ orderId }: DeliveryTrackerProps) => {
       {/* 헤더 */}
       <div className="flex items-center justify-between mb-6">
         <h3 className="text-xl font-bold text-gray-900">배송 추적</h3>
-        <span className="text-sm text-gray-600">주문번호: {orderId}</span>
+        <span className="text-sm text-gray-600">주문번호: {order.order_number}</span>
       </div>
 
       {/* 예상 도착 시간 */}
@@ -137,7 +111,7 @@ const DeliveryTracker = ({ orderId }: DeliveryTrackerProps) => {
           <div>
             <p className="text-sm text-gray-600">예상 도착 시간</p>
             <p className="text-2xl font-bold text-orange-600">
-              {estimatedTime}분 후
+              {remainingTime}분 후
             </p>
           </div>
           <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center">
@@ -148,9 +122,9 @@ const DeliveryTracker = ({ orderId }: DeliveryTrackerProps) => {
 
       {/* 배송 상태 타임라인 */}
       <div className="space-y-4 mb-6">
-        {deliveryStatus.map((status, index) => (
+        {tracking.map((item, index) => (
           <motion.div
-            key={status.id}
+            key={item.id}
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ delay: index * 0.1 }}
@@ -158,21 +132,21 @@ const DeliveryTracker = ({ orderId }: DeliveryTrackerProps) => {
           >
             {/* 상태 아이콘 */}
             <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
-              getStatusColor(status.status, status.status === currentStatus)
+              getStatusColor(item.status, item.status === currentStatus)
             }`}>
-              {getStatusIcon(status.status)}
+              {getStatusIcon(item.status)}
             </div>
 
             {/* 상태 정보 */}
             <div className="flex-1">
               <div className="flex items-center justify-between">
-                <p className="font-semibold text-gray-900">{status.message}</p>
+                <p className="font-semibold text-gray-900">{item.notes || item.status}</p>
                 <span className="text-sm text-gray-500">
-                  {formatTime(status.timestamp)}
+                  {formatTime(new Date(item.created_at))}
                 </span>
               </div>
-              {status.location && (
-                <p className="text-sm text-gray-600 mt-1">{status.location}</p>
+              {item.location && (
+                <p className="text-sm text-gray-600 mt-1">{JSON.stringify(item.location)}</p>
               )}
             </div>
           </motion.div>
@@ -180,7 +154,7 @@ const DeliveryTracker = ({ orderId }: DeliveryTrackerProps) => {
       </div>
 
       {/* 배달원 정보 */}
-      {currentStatus === 'picked_up' || currentStatus === 'in_transit' ? (
+      {(currentStatus === 'out_for_delivery' || currentStatus === 'delivering') ? (
         <div className="border-t pt-4">
           <h4 className="font-semibold text-gray-900 mb-3">배달원 정보</h4>
           <div className="flex items-center justify-between">
@@ -210,7 +184,7 @@ const DeliveryTracker = ({ orderId }: DeliveryTrackerProps) => {
       ) : null}
 
       {/* 실시간 지도 (시뮬레이션) */}
-      {currentStatus === 'in_transit' && (
+      {currentStatus === 'out_for_delivery' && (
         <div className="border-t pt-4 mt-4">
           <h4 className="font-semibold text-gray-900 mb-3">실시간 위치</h4>
           <div className="h-32 bg-gray-100 rounded-2xl flex items-center justify-center">
