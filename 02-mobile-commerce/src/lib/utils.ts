@@ -17,7 +17,16 @@ export function formatDiscount(originalPrice: number, discountedPrice: number) {
   return discount;
 }
 
-export function formatDeliveryTime(minutes: number) {
+export function formatDeliveryTime(time: number | string | null) {
+  if (!time) return '30분 내';
+  
+  // 문자열로 전달된 경우 (예: "30분 내", "1시간")
+  if (typeof time === 'string') {
+    return time;
+  }
+  
+  // 숫자로 전달된 경우 (분 단위)
+  const minutes = Number(time);
   if (minutes < 60) {
     return `${minutes}분`;
   }

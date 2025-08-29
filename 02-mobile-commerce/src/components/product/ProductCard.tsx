@@ -7,10 +7,12 @@ import {
   Star, 
   Truck,
 } from 'lucide-react';
-import { Product } from '@/types/product';
+import { Database } from '@/lib/supabase/database.types';
 import { formatPrice, formatDeliveryTime } from '@/lib/utils';
-import { useCartStore } from '@/store/cartStore';
+import { useCart } from '@/hooks/useCart';
 import { cn } from '@/lib/utils';
+
+type Product = Database['public']['Tables']['products']['Row'];
 
 interface ProductCardProps {
   product: Product;
@@ -28,12 +30,12 @@ const ProductCard = ({
   onToggleFavorite 
 }: ProductCardProps) => {
   const [isFavorite, setIsFavorite] = useState(false);
-  const { addItem, getItemQuantity } = useCartStore();
+  const { addToCart, cart } = useCart();
   
-  const quantity = getItemQuantity(product.id);
+  const quantity = cart?.items.find(item => item.product.id === product.id)?.quantity || 0;
   
-  const handleAddToCart = () => {
-    addItem(product);
+  const handleAddToCart = async () => {
+    await addToCart(product.id);
     onAddToCart?.(product);
   };
 
@@ -64,14 +66,14 @@ const ProductCard = ({
               <div className="flex items-center gap-1">
                 <Star className="w-3 h-3 fill-[var(--ios-yellow)] text-[var(--ios-yellow)]" />
                 <span className="ios-caption text-[var(--text-secondary)]">
-                  {product.rating.toFixed(1)}
+                  {(product.rating || 0).toFixed(1)}
                 </span>
               </div>
               <span className="ios-caption text-[var(--text-tertiary)]">•</span>
               <div className="flex items-center gap-1">
                 <Truck className="w-3 h-3 text-[var(--text-tertiary)]" />
                 <span className="ios-caption text-[var(--text-tertiary)]">
-                  {formatDeliveryTime(product.deliveryTime)}
+                  {formatDeliveryTime(product.delivery_time || '30분 내')}
                 </span>
               </div>
             </div>
@@ -82,9 +84,9 @@ const ProductCard = ({
             <div className="ios-callout font-semibold text-[var(--text-primary)]">
               {formatPrice(product.price)}
             </div>
-            {product.originalPrice && product.originalPrice > product.price && (
+            {product.original_price && product.original_price > product.price && (
               <div className="ios-caption text-[var(--text-tertiary)] line-through">
-                {formatPrice(product.originalPrice)}
+                {formatPrice(product.original_price)}
               </div>
             )}
             <button 
@@ -144,7 +146,7 @@ const ProductCard = ({
               key={i}
               className={cn(
                 "w-3 h-3",
-                i < Math.floor(product.rating) 
+                i < Math.floor(product.rating || 0) 
                   ? "text-[var(--ios-yellow)] fill-current" 
                   : "text-[var(--ios-gray4)]"
               )}
@@ -152,7 +154,7 @@ const ProductCard = ({
           ))}
         </div>
         <span className="ios-caption text-[var(--text-secondary)] ml-1">
-          {product.rating.toFixed(1)} ({product.reviewCount || 0})
+          {(product.rating || 0).toFixed(1)} ({product.reviews_count || 0})
         </span>
       </div>
 
@@ -162,18 +164,18 @@ const ProductCard = ({
           <span className="ios-callout font-semibold text-[var(--text-primary)]">
             {formatPrice(product.price)}
           </span>
-          {product.originalPrice && product.originalPrice > product.price && (
+          {product.original_price && product.original_price > product.price && (
             <span className="ios-caption text-[var(--text-tertiary)] line-through">
-              {formatPrice(product.originalPrice)}
+              {formatPrice(product.original_price)}
             </span>
           )}
         </div>
         
         {/* 할인율 */}
-        {product.originalPrice && product.originalPrice > product.price && (
+        {product.original_price && product.original_price > product.price && (
           <div className="flex items-center gap-2 mt-1">
             <span className="inline-block px-2 py-1 bg-[var(--ios-red)] text-white rounded text-xs font-semibold">
-              {Math.round((1 - product.price / product.originalPrice) * 100)}% OFF
+              {Math.round((1 - product.price / product.original_price) * 100)}% OFF
             </span>
           </div>
         )}
@@ -183,9 +185,9 @@ const ProductCard = ({
       <div className="flex items-center gap-1 mb-3">
         <Truck className="w-3 h-3 text-[var(--text-secondary)]" />
         <span className="ios-caption text-[var(--text-secondary)]">
-          {formatDeliveryTime(product.deliveryTime)}
+          {formatDeliveryTime(product.delivery_time || '30분 내')}
         </span>
-        {product.deliveryTime <= 30 && (
+        {product.delivery_time && parseInt(product.delivery_time) <= 30 && (
           <span className="ios-caption text-[var(--ios-green)] font-medium ml-1">
             무료배송
           </span>

@@ -5,21 +5,22 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Sparkles, RefreshCw, ShoppingBag } from 'lucide-react';
 import SwipeCard from '@/components/ui/SwipeCard';
 import ProductCard from '@/components/product/ProductCard';
-import { Product } from '@/types/product';
-import { sampleProducts } from '@/data/sampleProducts';
-import { useCartStore } from '@/store/cartStore';
+import { Database } from '@/lib/supabase/database.types';
+import { useProducts } from '@/hooks/useProducts';
+import { useCart } from '@/hooks/useCart';
+
+type Product = Database['public']['Tables']['products']['Row'];
 
 const SwipeShop = () => {
-  const [products, setProducts] = useState<Product[]>([]);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [likedProducts, setLikedProducts] = useState<Product[]>([]);
   const [passedProducts, setPassedProducts] = useState<Product[]>([]);
-  const { addItem } = useCartStore();
-
-  // 초기 상품 로드
-  useEffect(() => {
-    setProducts(sampleProducts.slice(0, 5)); // 처음 5개만 로드
-  }, []);
+  
+  const { products, loading, refresh } = useProducts({ 
+    featured: true, 
+    limit: 10 
+  });
+  const { addToCart } = useCart();
 
   const handleSwipeRight = () => {
     if (currentIndex < products.length) {
@@ -37,16 +38,18 @@ const SwipeShop = () => {
     }
   };
 
-  const handleSwipeUp = () => {
+  const handleSwipeUp = async () => {
     if (currentIndex < products.length) {
       const product = products[currentIndex];
-      addItem(product);
-      // 장바구니 추가 피드백
-      const event = new CustomEvent('productAddedToCart', { 
-        detail: { product } 
-      });
-      window.dispatchEvent(event);
-      nextProduct();
+      const success = await addToCart(product.id);
+      if (success) {
+        // 장바구니 추가 피드백
+        const event = new CustomEvent('productAddedToCart', { 
+          detail: { product } 
+        });
+        window.dispatchEvent(event);
+        nextProduct();
+      }
     }
   };
 
@@ -54,16 +57,27 @@ const SwipeShop = () => {
     setCurrentIndex(prev => prev + 1);
   };
 
-  const resetCards = () => {
+  const resetCards = async () => {
     setCurrentIndex(0);
     setLikedProducts([]);
     setPassedProducts([]);
-    // 새로운 상품들로 로드 (고정 순서)
-    setProducts(sampleProducts.slice(0, 5));
+    // 새로운 상품들로 로드
+    await refresh();
   };
 
   const currentProduct = products[currentIndex];
   const hasMoreProducts = currentIndex < products.length;
+
+  if (loading && products.length === 0) {
+    return (
+      <div className="flex items-center justify-center h-full">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500 mx-auto mb-4"></div>
+          <p className="text-gray-600">상품을 불러오는 중...</p>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="relative h-full flex flex-col">
