@@ -3,13 +3,14 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import Image from 'next/image';
-import { ChevronDown, Code2, Sparkles, Zap } from 'lucide-react';
+import { ChevronDown, Code2, Sparkles, Zap, Bot, Brain, Cpu, Terminal } from 'lucide-react';
 import Button from '@/components/ui/Button';
 import { profileData } from '@/data/profile';
 
 const Hero = () => {
   const [text, setText] = useState('');
-  const fullText = '풀스택 개발자 & AI 전문가';
+  const fullText = 'AI 엔지니어 & 풀스택 연구원';
+  const [isMatrixEffect, setIsMatrixEffect] = useState(false);
   
   useEffect(() => {
     let index = 0;
@@ -29,11 +30,16 @@ const Hero = () => {
   };
 
   return (
-    <section className="min-h-screen relative overflow-hidden bg-gradient-to-br from-slate-50 via-white to-slate-50">
-      {/* Background Effects */}
+    <section className="min-h-screen relative overflow-hidden bg-gradient-to-br from-slate-900 via-purple-900/20 to-slate-900 matrix-bg">
+      {/* AI Background Effects */}
       <div className="absolute inset-0">
-        <div className="absolute top-1/4 -left-4 w-72 h-72 bg-gradient-to-r from-cyan-400/20 to-purple-600/20 rounded-full mix-blend-multiply filter blur-xl animate-pulse"></div>
-        <div className="absolute top-1/3 -right-4 w-72 h-72 bg-gradient-to-r from-purple-600/20 to-pink-500/20 rounded-full mix-blend-multiply filter blur-xl animate-pulse animation-delay-2000"></div>
+        {/* Neon Grid */}
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" xmlns="http://www.w3.org/2000/svg"%3E%3Cdefs%3E%3Cpattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse"%3E%3Cpath d="M 60 0 L 0 0 0 60" fill="none" stroke="%2300FF88" stroke-width="0.5" opacity="0.1"/%3E%3C/pattern%3E%3C/defs%3E%3Crect width="100%25" height="100%25" fill="url(%23grid)"/%3E%3C/svg%3E')] opacity-20"></div>
+        
+        {/* Floating Orbs */}
+        <div className="absolute top-1/4 -left-4 w-72 h-72 bg-gradient-to-r from-green-400/30 to-cyan-500/30 rounded-full mix-blend-screen filter blur-xl animate-pulse"></div>
+        <div className="absolute top-1/3 -right-4 w-72 h-72 bg-gradient-to-r from-purple-600/30 to-cyan-500/30 rounded-full mix-blend-screen filter blur-xl animate-pulse animation-delay-2000"></div>
+        <div className="absolute bottom-1/4 left-1/2 w-96 h-96 bg-gradient-to-r from-green-400/20 to-purple-600/20 rounded-full mix-blend-screen filter blur-2xl animate-pulse animation-delay-4000"></div>
       </div>
 
       <div className="relative container mx-auto px-6 pt-20 pb-16">
@@ -47,47 +53,49 @@ const Hero = () => {
           >
             {/* Badge */}
             <motion.div
-              className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-cyan-500/10 to-purple-600/10 border border-cyan-500/20 rounded-full text-sm font-medium"
+              className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-green-400/20 to-cyan-500/20 border border-green-400/50 rounded-full text-sm font-medium neon-border"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.6 }}
             >
-              <Sparkles className="w-4 h-4 text-purple-600" />
-              AI 기반 솔루션 제공
+              <Brain className="w-4 h-4 text-green-400 pulse-ai" />
+              <span className="text-green-400 neon-glow">AI 연구소 가동 중</span>
             </motion.div>
 
             {/* Main Heading */}
             <div className="space-y-4">
               <motion.h1 
-                className="text-5xl lg:text-6xl font-bold text-gray-900 leading-tight"
+                className="text-5xl lg:text-7xl font-bold text-white leading-tight"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3, duration: 0.8 }}
               >
-                안녕하세요,
+                <span className="text-gray-300">안녕하세요,</span>
                 <br />
-                <span className="bg-gradient-to-r from-cyan-600 to-purple-600 bg-clip-text text-transparent">
+                <span className="bg-gradient-to-r from-green-400 via-cyan-500 to-purple-600 bg-clip-text text-transparent neon-glow">
                   {profileData.name}
                 </span>
-                입니다
+                <br />
+                <span className="text-gray-300 text-3xl lg:text-4xl">입니다 🤖</span>
               </motion.h1>
               
               <div className="h-16 flex items-center">
                 <motion.h2 
-                  className="text-2xl lg:text-3xl font-semibold text-gray-700"
+                  className="text-2xl lg:text-3xl font-semibold text-green-400 font-mono"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ delay: 0.6, duration: 0.8 }}
                 >
+                  <Terminal className="inline w-6 h-6 mr-2" />
                   {text}
-                  <span className="animate-pulse text-purple-600">|</span>
+                  <span className="animate-pulse text-green-400 neon-glow">_</span>
                 </motion.h2>
               </div>
             </div>
 
             {/* Description */}
             <motion.p 
-              className="text-xl text-gray-600 leading-relaxed max-w-2xl"
+              className="text-xl text-gray-300 leading-relaxed max-w-2xl"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.8, duration: 0.8 }}
@@ -102,17 +110,17 @@ const Hero = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1, duration: 0.8 }}
             >
-              <div className="text-center">
-                <div className="text-3xl font-bold bg-gradient-to-r from-cyan-600 to-purple-600 bg-clip-text text-transparent">50+</div>
-                <div className="text-sm text-gray-600 mt-1">프로젝트 완성</div>
+              <div className="text-center bg-gradient-to-r from-green-400/10 to-cyan-500/10 p-4 rounded-xl border border-green-400/30">
+                <div className="text-3xl font-bold text-green-400 neon-glow">98%</div>
+                <div className="text-sm text-gray-400 mt-1">🧬 AI 활용도</div>
               </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold bg-gradient-to-r from-cyan-600 to-purple-600 bg-clip-text text-transparent">30%</div>
-                <div className="text-sm text-gray-600 mt-1">비용 절약</div>
+              <div className="text-center bg-gradient-to-r from-cyan-500/10 to-purple-600/10 p-4 rounded-xl border border-cyan-500/30">
+                <div className="text-3xl font-bold text-cyan-400 neon-glow">50%</div>
+                <div className="text-sm text-gray-400 mt-1">⚡ 개발 속도</div>
               </div>
-              <div className="text-center">
-                <div className="text-3xl font-bold bg-gradient-to-r from-cyan-600 to-purple-600 bg-clip-text text-transparent">5년+</div>
-                <div className="text-sm text-gray-600 mt-1">개발 경력</div>
+              <div className="text-center bg-gradient-to-r from-purple-600/10 to-green-400/10 p-4 rounded-xl border border-purple-600/30">
+                <div className="text-3xl font-bold text-purple-400 neon-glow">300%</div>
+                <div className="text-sm text-gray-400 mt-1">🚀 생산성</div>
               </div>
             </motion.div>
 
@@ -123,13 +131,21 @@ const Hero = () => {
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.2, duration: 0.8 }}
             >
-              <Button size="lg" onClick={scrollToProjects} className="group">
-                <Code2 className="w-5 h-5 mr-2 group-hover:rotate-12 transition-transform" />
-                프로젝트 보기
+              <Button 
+                size="lg" 
+                onClick={scrollToProjects} 
+                className="group bg-gradient-to-r from-green-400 to-cyan-500 hover:from-green-500 hover:to-cyan-600 border-0 text-black font-bold shadow-lg shadow-green-400/25"
+              >
+                <Cpu className="w-5 h-5 mr-2 group-hover:rotate-180 transition-transform duration-500" />
+                AI 프로젝트 탐색
               </Button>
-              <Button variant="outline" size="lg" className="group">
-                <Zap className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
-                무료 상담하기
+              <Button 
+                variant="outline" 
+                size="lg" 
+                className="group border-green-400/50 text-green-400 hover:bg-green-400/10 neon-border"
+              >
+                <Bot className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform pulse-ai" />
+                AI 연구소 접속
               </Button>
             </motion.div>
           </motion.div>
@@ -145,36 +161,50 @@ const Hero = () => {
               {/* Background Gradient Circle */}
               <div className="absolute inset-0 bg-gradient-to-br from-cyan-400 to-purple-600 rounded-full blur-2xl opacity-20 scale-110"></div>
               
-              {/* Profile Image Container */}
+              {/* AI Avatar Container */}
               <motion.div 
-                className="relative w-80 h-80 lg:w-96 lg:h-96 rounded-full overflow-hidden border-4 border-white shadow-2xl"
+                className="relative w-80 h-80 lg:w-96 lg:h-96 rounded-full flex items-center justify-center bg-gradient-to-br from-green-400/20 via-cyan-500/20 to-purple-600/20 border-2 border-green-400/50 shadow-2xl shadow-green-400/20 neon-border"
                 whileHover={{ scale: 1.05 }}
                 transition={{ type: "spring", stiffness: 300, damping: 30 }}
               >
-                <Image
-                  src="/images/profile.jpg"
-                  alt={profileData.name}
-                  fill
-                  className="object-cover"
-                  priority
+                <div className="text-[200px] select-none">🤖</div>
+                
+                {/* AI Scanning Effect */}
+                <motion.div
+                  className="absolute inset-0 rounded-full border-2 border-green-400/50"
+                  animate={{ 
+                    scale: [1, 1.1, 1],
+                    opacity: [0.5, 0, 0.5]
+                  }}
+                  transition={{ 
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
                 />
               </motion.div>
 
               {/* Floating Elements */}
               <motion.div
-                className="absolute -top-4 -right-4 bg-white p-3 rounded-2xl shadow-lg border border-gray-100"
-                animate={{ y: [0, -10, 0] }}
-                transition={{ duration: 2, repeat: Infinity }}
+                className="absolute -top-4 -right-4 bg-gradient-to-r from-green-400/20 to-cyan-500/20 p-3 rounded-2xl shadow-lg border border-green-400/50 neon-border"
+                animate={{ 
+                  y: [0, -10, 0],
+                  rotate: [0, 360]
+                }}
+                transition={{ duration: 3, repeat: Infinity }}
               >
-                <Code2 className="w-6 h-6 text-purple-600" />
+                <Brain className="w-6 h-6 text-green-400 neon-glow" />
               </motion.div>
 
               <motion.div
-                className="absolute -bottom-4 -left-4 bg-white p-3 rounded-2xl shadow-lg border border-gray-100"
-                animate={{ y: [0, 10, 0] }}
-                transition={{ duration: 2, repeat: Infinity, delay: 1 }}
+                className="absolute -bottom-4 -left-4 bg-gradient-to-r from-purple-600/20 to-cyan-500/20 p-3 rounded-2xl shadow-lg border border-purple-600/50 neon-border"
+                animate={{ 
+                  y: [0, 10, 0],
+                  scale: [1, 1.2, 1]
+                }}
+                transition={{ duration: 3, repeat: Infinity, delay: 1 }}
               >
-                <Sparkles className="w-6 h-6 text-cyan-500" />
+                <Cpu className="w-6 h-6 text-purple-400 neon-glow" />
               </motion.div>
             </div>
           </motion.div>
@@ -186,7 +216,7 @@ const Hero = () => {
           animate={{ y: [0, 10, 0] }}
           transition={{ duration: 1.5, repeat: Infinity }}
         >
-          <ChevronDown className="w-6 h-6 text-gray-400" />
+          <ChevronDown className="w-6 h-6 text-green-400 neon-glow" />
         </motion.div>
       </div>
     </section>
