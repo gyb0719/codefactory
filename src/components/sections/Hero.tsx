@@ -34,7 +34,7 @@ const Hero = () => {
       {/* AI Background Effects */}
       <div className="absolute inset-0">
         {/* Neon Grid */}
-        <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg width="60" height="60" xmlns="http://www.w3.org/2000/svg"%3E%3Cdefs%3E%3Cpattern id="grid" width="60" height="60" patternUnits="userSpaceOnUse"%3E%3Cpath d="M 60 0 L 0 0 0 60" fill="none" stroke="%2300FF88" stroke-width="0.5" opacity="0.1"/%3E%3C/pattern%3E%3C/defs%3E%3Crect width="100%25" height="100%25" fill="url(%23grid)"/%3E%3C/svg%3E')] opacity-20"></div>
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2260%22%20height%3D%2260%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cdefs%3E%3Cpattern%20id%3D%22grid%22%20width%3D%2260%22%20height%3D%2260%22%20patternUnits%3D%22userSpaceOnUse%22%3E%3Cpath%20d%3D%22M%2060%200%20L%200%200%200%2060%22%20fill%3D%22none%22%20stroke%3D%22%2300FF88%22%20stroke-width%3D%220.5%22%20opacity%3D%220.1%22%2F%3E%3C%2Fpattern%3E%3C%2Fdefs%3E%3Crect%20width%3D%22100%25%22%20height%3D%22100%25%22%20fill%3D%22url(%23grid)%22%2F%3E%3C%2Fsvg%3E')] opacity-20"></div>
         
         {/* Floating Orbs */}
         <div className="absolute top-1/4 -left-4 w-72 h-72 bg-gradient-to-r from-green-400/30 to-cyan-500/30 rounded-full mix-blend-screen filter blur-xl animate-pulse"></div>
@@ -72,11 +72,11 @@ const Hero = () => {
               >
                 <span className="text-gray-300">안녕하세요,</span>
                 <br />
-                <span className="bg-gradient-to-r from-green-400 via-cyan-500 to-purple-600 bg-clip-text text-transparent neon-glow">
+                <span className="text-5xl lg:text-6xl">🤖</span>
+                <span className="bg-gradient-to-r from-green-400 via-cyan-500 to-purple-600 bg-clip-text text-transparent neon-glow ml-3">
                   {profileData.name}
                 </span>
-                <br />
-                <span className="text-gray-300 text-3xl lg:text-4xl">입니다 🤖</span>
+                <span className="text-gray-300 text-3xl lg:text-4xl">입니다.</span>
               </motion.h1>
               
               <div className="h-16 flex items-center">
@@ -163,11 +163,34 @@ const Hero = () => {
               
               {/* AI Avatar Container */}
               <motion.div 
-                className="relative w-80 h-80 lg:w-96 lg:h-96 rounded-full flex items-center justify-center bg-gradient-to-br from-green-400/20 via-cyan-500/20 to-purple-600/20 border-2 border-green-400/50 shadow-2xl shadow-green-400/20 neon-border"
+                className="relative w-80 h-80 lg:w-96 lg:h-96 rounded-full flex items-center justify-center bg-gradient-to-br from-green-400/20 via-cyan-500/20 to-purple-600/20 border-2 border-green-400/50 shadow-2xl shadow-green-400/20 neon-border overflow-hidden"
                 whileHover={{ scale: 1.05 }}
                 transition={{ type: "spring", stiffness: 300, damping: 30 }}
               >
-                <div className="text-[200px] select-none">🤖</div>
+                {/* Profile Image with AI Effects */}
+                <div className="relative w-full h-full">
+                  <Image
+                    src="/profile.jpg"
+                    alt="AI 엔지니어 프로필"
+                    fill
+                    className="object-cover rounded-full"
+                    priority
+                    onError={(e) => {
+                      e.currentTarget.style.display = 'none';
+                      e.currentTarget.parentElement!.innerHTML = `
+                        <div class="w-full h-full flex items-center justify-center bg-gradient-to-br from-slate-800 to-slate-900 rounded-full">
+                          <div class="text-center">
+                            <div class="text-6xl mb-4">👨‍💻</div>
+                            <p class="text-green-400 text-sm font-mono">AI Engineer</p>
+                          </div>
+                        </div>
+                      `;
+                    }}
+                  />
+                  {/* AI Overlay Effect */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-green-400/20 via-transparent to-cyan-500/20 mix-blend-overlay rounded-full"></div>
+                  <div className="absolute inset-0 bg-gradient-to-br from-transparent via-purple-600/10 to-transparent mix-blend-soft-light rounded-full"></div>
+                </div>
                 
                 {/* AI Scanning Effect */}
                 <motion.div
