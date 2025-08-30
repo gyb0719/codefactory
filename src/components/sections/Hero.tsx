@@ -68,21 +68,25 @@ const Hero = () => {
             {/* Enhanced Main Heading */}
             <div className="space-y-6">
               <motion.h1 
-                className="font-bold leading-none tracking-tight"
+                className="font-bold leading-tight tracking-tight"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3, duration: 0.8 }}
               >
-                <span className="block text-2xl lg:text-3xl font-medium text-[var(--text-secondary)] mb-4">안녕하세요,</span>
-                <span className="flex items-center flex-wrap gap-4">
-                  <span className="text-5xl lg:text-7xl">🤖</span>
-                  <div className="flex items-baseline">
+                <span className="block text-2xl lg:text-3xl font-medium text-[var(--text-secondary)] mb-6">
+                  안녕하세요,
+                </span>
+                <div className="space-y-2">
+                  <span className="inline-flex items-center gap-4">
+                    <span className="text-6xl lg:text-8xl animate-bounce-slow">🤖</span>
                     <span className="text-5xl lg:text-7xl font-black bg-gradient-to-r from-green-400 via-cyan-400 to-purple-500 bg-clip-text text-transparent animate-gradient-shift bg-[length:200%_200%]">
                       {profileData.name}
                     </span>
-                    <span className="text-5xl lg:text-7xl font-black text-[var(--text-secondary)]">입니다.</span>
-                  </div>
-                </span>
+                  </span>
+                  <span className="block text-4xl lg:text-5xl font-bold text-[var(--text-secondary)]">
+                    입니다.
+                  </span>
+                </div>
               </motion.h1>
               
               <motion.div 

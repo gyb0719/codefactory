@@ -346,6 +346,20 @@ code, pre {
   .animation-delay-2000 { animation-delay: 2000ms; }
   .animation-delay-4000 { animation-delay: 4000ms; }
   
+  /* Smooth Bounce Animation */
+  @keyframes bounce-slow {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+  
+  .animate-bounce-slow {
+    animation: bounce-slow 3s ease-in-out infinite;
+  }
+  
   /* Smooth Scroll */
   .smooth-scroll {
     scroll-behavior: smooth;
