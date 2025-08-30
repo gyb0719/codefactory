@@ -79,8 +79,8 @@ const Hero = () => {
                   <span className="text-5xl lg:text-7xl font-black bg-gradient-to-r from-green-400 via-cyan-400 to-purple-500 bg-clip-text text-transparent animate-gradient-shift bg-[length:200%_200%]">
                     {profileData.name}
                   </span>
+                  <span className="text-3xl lg:text-4xl text-[var(--text-secondary)] font-light">입니다.</span>
                 </span>
-                <span className="block text-3xl lg:text-4xl text-[var(--text-secondary)] mt-2 font-light">입니다.</span>
               </motion.h1>
               
               <motion.div 
