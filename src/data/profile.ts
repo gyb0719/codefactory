@@ -1,31 +1,31 @@
 export const profileData = {
-  name: "코드팩토리",
-  company: "코드 팩토리",
-  title: "풀스택 개발자 & AI 전문가",
+  name: "AI 코드 연구소",
+  company: "AI 코드 연구소",
+  title: "AI 엔지니어 & 풀스택 연구원",
   email: "gyb07190@gmail.com",
   phone: "+82 10-3825-5659",
   website: "codefactory.ink",
   
-  bio: "AI와 최신 기술을 활용해 효율적이고 혁신적인 솔루션을 제공하는 1인 풀스택 개발자입니다. 웹과 모바일 앱 개발 전 영역에서 시중 대비 30% 저렴한 가격으로 고품질 서비스를 제공합니다.",
+  bio: "🤖 최첨단 AI 기술로 미래를 코딩하는 연구소입니다. ChatGPT, Claude, GitHub Copilot 등 최신 AI 도구를 활용하여 개발 시간을 50% 단축하면서도 더 높은 품질의 솔루션을 제공합니다.",
   
   experience: [
     {
       period: "2020 - Present",
-      company: "코드 팩토리",
-      position: "대표 / 풀스택 개발자",
-      description: "AI 기반 개발 솔루션으로 빠르고 효율적인 웹/앱 개발 서비스 제공"
+      company: "AI 코드 연구소",
+      position: "수석 AI 연구원",
+      description: "🔬 AI 기반 자동화 개발 시스템 연구 및 차세대 개발 패러다임 구축"
     },
     {
       period: "2018 - 2020",
-      company: "테크 스타트업",
-      position: "시니어 개발자",
-      description: "React/Node.js 기반 B2B SaaS 플랫폼 개발 및 팀 리딩"
+      company: "AI 테크 스타트업",
+      position: "AI 엔지니어",
+      description: "🧬 머신러닝 기반 자동화 시스템 개발 및 AI 워크플로우 설계"
     },
     {
       period: "2016 - 2018",
-      company: "IT 솔루션 회사",
-      position: "프론트엔드 개발자",
-      description: "대규모 엔터프라이즈 웹 애플리케이션 개발"
+      company: "AI 연구 센터",
+      position: "주니어 연구원",
+      description: "🧪 AI 알고리즘 연구 및 프로토타입 개발"
     }
   ],
 
@@ -60,19 +60,20 @@ export const profileData = {
       ]
     },
     ai: {
-      name: "AI & Productivity",
+      name: "AI & ML Technologies",
       technologies: [
-        { name: "ChatGPT/Claude", level: 95 },
-        { name: "GitHub Copilot", level: 90 },
-        { name: "Cursor IDE", level: 90 },
-        { name: "AI Workflow", level: 95 }
+        { name: "ChatGPT/Claude", level: 98 },
+        { name: "GitHub Copilot", level: 95 },
+        { name: "Cursor/v0.dev", level: 93 },
+        { name: "Midjourney/DALL-E", level: 88 },
+        { name: "LangChain/Vector DB", level: 85 }
       ]
     }
   },
 
   services: [
     {
-      category: "웹 개발",
+      category: "🧬 AI 웹 개발 연구실",
       items: [
         {
           name: "랜딩 페이지",
@@ -95,7 +96,7 @@ export const profileData = {
       ]
     },
     {
-      category: "모바일 앱",
+      category: "🔬 모바일 AI 실험실",
       items: [
         {
           name: "MVP 앱",
@@ -115,31 +116,31 @@ export const profileData = {
 
   projects: [
     {
-      title: "AI 기반 부동산 플랫폼",
-      description: "ChatGPT API를 활용한 부동산 추천 및 상담 서비스",
-      tech: ["Next.js", "TypeScript", "OpenAI API", "Supabase"],
-      image: "/images/project1.jpg",
-      liveUrl: "https://realestate-ai.demo",
-      githubUrl: "https://github.com/codefactory/realestate-ai",
-      highlights: ["AI 추천 시스템", "실시간 상담", "30% 성능 향상"]
+      title: "🛍️ 퀵마트 - AI 스와이프 쇼핑",
+      description: "TikTok 스타일 스와이프로 30분 내 초고속 배송하는 AI 커머스 플랫폼",
+      tech: ["Next.js 15", "TypeScript", "Supabase", "PWA", "Framer Motion"],
+      image: "/images/quickmart.jpg",
+      liveUrl: "/codefactory/02-mobile-commerce/",
+      githubUrl: "https://github.com/gyb0719/codefactory",
+      highlights: ["🤖 AI 추천 엔진", "⚡ 30분 배송", "📱 PWA 지원"]
     },
     {
-      title: "모바일 커머스 앱",
-      description: "React Native로 개발한 크로스플랫폼 쇼핑몰 앱",
-      tech: ["React Native", "Redux", "Node.js", "MongoDB"],
-      image: "/images/project2.jpg",
-      liveUrl: "https://commerce-app.demo",
-      githubUrl: "https://github.com/codefactory/commerce-app",
-      highlights: ["크로스플랫폼", "결제 연동", "푸시 알림"]
+      title: "💘 Aura - AI 프리미엄 데이팅",
+      description: "AI 매칭 알고리즘과 실시간 영상 통화를 지원하는 차세대 소개팅 플랫폼",
+      tech: ["React", "TypeScript", "WebRTC", "AI Matching", "Real-time Chat"],
+      image: "/images/aura.jpg",
+      liveUrl: "https://gyb0719.github.io/aura-premium-dating-platform/",
+      githubUrl: "https://github.com/gyb0719/aura-premium-dating-platform",
+      highlights: ["🧬 AI 매칭", "📹 영상 통화", "💎 프리미엄 UI"]
     },
     {
-      title: "SaaS 대시보드",
-      description: "기업용 데이터 분석 및 시각화 대시보드",
-      tech: ["Vue.js", "D3.js", "Python", "PostgreSQL"],
-      image: "/images/project3.jpg",
-      liveUrl: "https://saas-dashboard.demo",
-      githubUrl: "https://github.com/codefactory/saas-dashboard",
-      highlights: ["실시간 데이터", "커스텀 차트", "다중 사용자"]
+      title: "🏠 AI 부동산 연구소",
+      description: "GPT-4 기반 부동산 가격 예측 및 AI 상담 시스템",
+      tech: ["Next.js", "OpenAI API", "LangChain", "Vector DB"],
+      image: "/images/realestate-ai.jpg",
+      liveUrl: "https://ai-estate.demo",
+      githubUrl: "https://github.com/ai-lab/estate-ai",
+      highlights: ["🔮 가격 예측", "💬 AI 상담", "📊 빅데이터 분석"]
     }
   ],
 
@@ -160,23 +161,23 @@ export const profileData = {
 
   aiWorkflow: [
     {
-      step: "요구사항 분석",
-      description: "ChatGPT와 함께 프로젝트 요구사항을 정확히 파악",
+      step: "🧬 AI 요구사항 분석",
+      description: "ChatGPT & Claude로 요구사항 자동 분석 및 최적화",
       tools: ["ChatGPT", "Notion", "Figma"]
     },
     {
-      step: "설계 및 기획",
-      description: "AI 도구로 최적의 아키텍처와 UI/UX 설계",
+      step: "🔬 AI 아키텍처 설계",
+      description: "AI가 제안하는 최적 시스템 아키텍처 자동 생성",
       tools: ["Claude", "Cursor", "v0.dev"]
     },
     {
-      step: "개발 및 구현",
-      description: "AI 코드 생성으로 빠르고 정확한 개발",
+      step: "⚡ AI 코드 생성",
+      description: "GitHub Copilot & Cursor로 코드 자동 생성 (생산성 300% 향상)",
       tools: ["GitHub Copilot", "Cursor", "Vercel v0"]
     },
     {
-      step: "테스트 및 배포",
-      description: "자동화된 테스트와 원클릭 배포",
+      step: "🚀 AI 자동 배포",
+      description: "AI 기반 테스트 자동화 및 무중단 배포 시스템",
       tools: ["Jest", "Playwright", "Vercel"]
     }
   ]

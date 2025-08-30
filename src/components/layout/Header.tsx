@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { Menu, X, Code2, Phone, Mail } from 'lucide-react';
+import { Menu, X, Phone, Mail, Bot, Brain, Cpu, Sparkles } from 'lucide-react';
 import Button from '@/components/ui/Button';
 import { profileData } from '@/data/profile';
 
@@ -53,12 +53,31 @@ const Header = () => {
               onClick={() => scrollToSection('#home')}
               whileHover={{ scale: 1.05 }}
             >
-              <div className="w-10 h-10 bg-gradient-to-br from-cyan-500 to-purple-600 rounded-xl flex items-center justify-center">
-                <Code2 className="w-6 h-6 text-white" />
+              <div className="relative">
+                <div className="w-10 h-10 bg-gradient-to-br from-green-400 via-cyan-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg shadow-cyan-500/25">
+                  <span className="text-2xl">🤖</span>
+                </div>
+                <motion.div 
+                  className="absolute -top-1 -right-1 w-3 h-3 bg-green-400 rounded-full"
+                  animate={{ 
+                    scale: [1, 1.2, 1],
+                    opacity: [1, 0.5, 1]
+                  }}
+                  transition={{ 
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut"
+                  }}
+                />
               </div>
               <div>
-                <div className="font-bold text-xl text-gray-900">{profileData.company}</div>
-                <div className="text-xs text-gray-500 -mt-1">by {profileData.name}</div>
+                <div className="font-bold text-xl bg-gradient-to-r from-green-400 to-cyan-500 bg-clip-text text-transparent">
+                  AI 코드 연구소
+                </div>
+                <div className="text-xs text-gray-500 -mt-1 flex items-center gap-1">
+                  <Sparkles className="w-3 h-3" />
+                  차세대 AI 개발 솔루션
+                </div>
               </div>
             </motion.div>
 
@@ -88,9 +107,9 @@ const Header = () => {
                 animate={{ opacity: 1, x: 0 }}
                 transition={{ delay: 0.6 }}
               >
-                <Button size="sm" className="group">
-                  <Phone className="w-4 h-4 mr-2 group-hover:rotate-12 transition-transform" />
-                  상담하기
+                <Button size="sm" className="group bg-gradient-to-r from-green-400 to-cyan-500 hover:from-green-500 hover:to-cyan-600 border-0">
+                  <Bot className="w-4 h-4 mr-2 group-hover:rotate-12 transition-transform" />
+                  AI 상담
                 </Button>
               </motion.div>
 
@@ -134,12 +153,12 @@ const Header = () => {
             {/* Header */}
             <div className="flex items-center justify-between p-6 border-b border-gray-100">
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 bg-gradient-to-br from-cyan-500 to-purple-600 rounded-lg flex items-center justify-center">
-                  <Code2 className="w-5 h-5 text-white" />
+                <div className="w-8 h-8 bg-gradient-to-br from-green-400 via-cyan-500 to-purple-600 rounded-lg flex items-center justify-center">
+                  <span className="text-xl">🤖</span>
                 </div>
                 <div>
-                  <div className="font-bold text-gray-900">{profileData.company}</div>
-                  <div className="text-xs text-gray-500">{profileData.name}</div>
+                  <div className="font-bold bg-gradient-to-r from-green-400 to-cyan-500 bg-clip-text text-transparent">AI 코드 연구소</div>
+                  <div className="text-xs text-gray-500">AI Development Lab</div>
                 </div>
               </div>
               <button
@@ -177,8 +196,9 @@ const Header = () => {
                   <Phone className="w-4 h-4" />
                   {profileData.phone}
                 </div>
-                <Button className="w-full mt-4">
-                  무료 상담 받기
+                <Button className="w-full mt-4 bg-gradient-to-r from-green-400 to-cyan-500 hover:from-green-500 hover:to-cyan-600 border-0">
+                  <Bot className="w-4 h-4 mr-2" />
+                  AI 상담 받기
                 </Button>
               </div>
             </div>
