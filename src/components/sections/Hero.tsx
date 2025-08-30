@@ -77,16 +77,16 @@ const Hero = () => {
                 <span className="block text-2xl lg:text-3xl font-medium text-[var(--text-secondary)] mb-6">
                   안녕하세요,
                 </span>
-                <div className="space-y-2">
-                  <span className="inline-flex items-center gap-6">
-                    <AILabIcon size={100} animated={true} />
+                <div className="inline-flex items-center flex-wrap gap-4">
+                  <AILabIcon size={100} animated={true} className="flex-shrink-0" />
+                  <div className="flex items-baseline flex-wrap">
                     <span className="text-5xl lg:text-7xl font-black bg-gradient-to-r from-green-400 via-cyan-400 to-purple-500 bg-clip-text text-transparent animate-gradient-shift bg-[length:200%_200%]">
                       {profileData.name}
                     </span>
-                  </span>
-                  <span className="block text-4xl lg:text-5xl font-bold text-[var(--text-secondary)] ml-28">
-                    입니다.
-                  </span>
+                    <span className="text-5xl lg:text-7xl font-black text-[var(--text-secondary)]">
+                      입니다.
+                    </span>
+                  </div>
                 </div>
               </motion.h1>
               
