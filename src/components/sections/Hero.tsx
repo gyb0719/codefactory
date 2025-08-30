@@ -30,7 +30,7 @@ const Hero = () => {
   };
 
   return (
-    <section className="min-h-screen relative overflow-hidden bg-gradient-to-br from-slate-900 via-purple-900/20 to-slate-900 matrix-bg">
+    <section className="min-h-screen relative overflow-hidden bg-gradient-to-br from-[var(--ai-dark)] via-purple-900/10 to-[var(--surface-darker)]">
       {/* AI Background Effects */}
       <div className="absolute inset-0">
         {/* Neon Grid */}
@@ -51,51 +51,55 @@ const Hero = () => {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.8 }}
           >
-            {/* Badge */}
+            {/* Enhanced Badge */}
             <motion.div
-              className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-green-400/20 to-cyan-500/20 border border-green-400/50 rounded-full text-sm font-medium neon-border"
+              className="inline-flex items-center gap-3 px-5 py-2.5 bg-gradient-to-r from-green-400/10 to-cyan-500/10 border border-green-400/30 rounded-full backdrop-blur-sm"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2, duration: 0.6 }}
             >
-              <Brain className="w-4 h-4 text-green-400 pulse-ai" />
-              <span className="text-green-400 neon-glow">AI 연구소 가동 중</span>
+              <div className="relative">
+                <Brain className="w-4 h-4 text-green-400" />
+                <span className="absolute -top-1 -right-1 w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
+              </div>
+              <span className="text-sm font-medium bg-gradient-to-r from-green-400 to-cyan-400 bg-clip-text text-transparent">AI 연구소 가동 중</span>
             </motion.div>
 
-            {/* Main Heading */}
-            <div className="space-y-4">
+            {/* Enhanced Main Heading */}
+            <div className="space-y-6">
               <motion.h1 
-                className="text-5xl lg:text-7xl font-bold text-white leading-tight"
+                className="font-bold leading-none tracking-tight"
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.3, duration: 0.8 }}
               >
-                <span className="text-gray-300">안녕하세요,</span>
-                <br />
-                <span className="text-5xl lg:text-6xl">🤖</span>
-                <span className="bg-gradient-to-r from-green-400 via-cyan-500 to-purple-600 bg-clip-text text-transparent neon-glow ml-3">
-                  {profileData.name}
+                <span className="block text-2xl lg:text-3xl font-medium text-[var(--text-secondary)] mb-4">안녕하세요,</span>
+                <span className="flex items-center flex-wrap gap-4">
+                  <span className="text-5xl lg:text-7xl">🤖</span>
+                  <span className="text-5xl lg:text-7xl font-black bg-gradient-to-r from-green-400 via-cyan-400 to-purple-500 bg-clip-text text-transparent animate-gradient-shift bg-[length:200%_200%]">
+                    {profileData.name}
+                  </span>
                 </span>
-                <span className="text-gray-300 text-3xl lg:text-4xl">입니다.</span>
+                <span className="block text-3xl lg:text-4xl text-[var(--text-secondary)] mt-2 font-light">입니다.</span>
               </motion.h1>
               
-              <div className="h-16 flex items-center">
-                <motion.h2 
-                  className="text-2xl lg:text-3xl font-semibold text-green-400 font-mono"
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.6, duration: 0.8 }}
-                >
-                  <Terminal className="inline w-6 h-6 mr-2" />
+              <motion.div 
+                className="flex items-center gap-3 mt-8"
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.6, duration: 0.8 }}
+              >
+                <Terminal className="w-5 h-5 text-green-400" />
+                <h2 className="text-xl lg:text-2xl font-mono font-medium text-[var(--text-secondary)]">
                   {text}
-                  <span className="animate-pulse text-green-400 neon-glow">_</span>
-                </motion.h2>
-              </div>
+                  <span className="inline-block w-3 h-5 ml-1 bg-green-400 animate-pulse"></span>
+                </h2>
+              </motion.div>
             </div>
 
-            {/* Description */}
+            {/* Enhanced Description */}
             <motion.p 
-              className="text-xl text-gray-300 leading-relaxed max-w-2xl"
+              className="text-lg lg:text-xl text-[var(--text-secondary)] leading-relaxed max-w-3xl font-light"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.8, duration: 0.8 }}
@@ -103,50 +107,63 @@ const Hero = () => {
               {profileData.bio}
             </motion.p>
 
-            {/* Stats */}
+            {/* Enhanced Stats with Better Design */}
             <motion.div 
-              className="grid grid-cols-3 gap-6 py-8"
+              className="grid grid-cols-3 gap-4 mt-12"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1, duration: 0.8 }}
             >
-              <div className="text-center bg-gradient-to-r from-green-400/10 to-cyan-500/10 p-4 rounded-xl border border-green-400/30">
-                <div className="text-3xl font-bold text-green-400 neon-glow">98%</div>
-                <div className="text-sm text-gray-400 mt-1">🧬 AI 활용도</div>
+              <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-green-400/5 to-cyan-500/5 p-6 border border-green-400/20 hover:border-green-400/40 transition-all duration-300">
+                <div className="relative z-10">
+                  <div className="text-4xl font-black bg-gradient-to-r from-green-400 to-cyan-400 bg-clip-text text-transparent">98%</div>
+                  <div className="text-sm text-[var(--text-tertiary)] mt-2 font-medium">AI 활용도</div>
+                </div>
+                <div className="absolute -bottom-2 -right-2 text-6xl opacity-10 group-hover:opacity-20 transition-opacity">🧬</div>
               </div>
-              <div className="text-center bg-gradient-to-r from-cyan-500/10 to-purple-600/10 p-4 rounded-xl border border-cyan-500/30">
-                <div className="text-3xl font-bold text-cyan-400 neon-glow">50%</div>
-                <div className="text-sm text-gray-400 mt-1">⚡ 개발 속도</div>
+              <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-cyan-500/5 to-purple-600/5 p-6 border border-cyan-500/20 hover:border-cyan-500/40 transition-all duration-300">
+                <div className="relative z-10">
+                  <div className="text-4xl font-black bg-gradient-to-r from-cyan-400 to-purple-500 bg-clip-text text-transparent">50%</div>
+                  <div className="text-sm text-[var(--text-tertiary)] mt-2 font-medium">개발 속도</div>
+                </div>
+                <div className="absolute -bottom-2 -right-2 text-6xl opacity-10 group-hover:opacity-20 transition-opacity">⚡</div>
               </div>
-              <div className="text-center bg-gradient-to-r from-purple-600/10 to-green-400/10 p-4 rounded-xl border border-purple-600/30">
-                <div className="text-3xl font-bold text-purple-400 neon-glow">300%</div>
-                <div className="text-sm text-gray-400 mt-1">🚀 생산성</div>
+              <div className="group relative overflow-hidden rounded-2xl bg-gradient-to-br from-purple-600/5 to-green-400/5 p-6 border border-purple-600/20 hover:border-purple-600/40 transition-all duration-300">
+                <div className="relative z-10">
+                  <div className="text-4xl font-black bg-gradient-to-r from-purple-500 to-green-400 bg-clip-text text-transparent">300%</div>
+                  <div className="text-sm text-[var(--text-tertiary)] mt-2 font-medium">생산성 향상</div>
+                </div>
+                <div className="absolute -bottom-2 -right-2 text-6xl opacity-10 group-hover:opacity-20 transition-opacity">🚀</div>
               </div>
             </motion.div>
 
-            {/* CTA Buttons */}
+            {/* Enhanced CTA Buttons */}
             <motion.div 
-              className="flex flex-col sm:flex-row gap-4"
+              className="flex flex-col sm:flex-row gap-4 mt-12"
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1.2, duration: 0.8 }}
             >
-              <Button 
-                size="lg" 
+              <button 
                 onClick={scrollToProjects} 
-                className="group bg-gradient-to-r from-green-400 to-cyan-500 hover:from-green-500 hover:to-cyan-600 border-0 text-black font-bold shadow-lg shadow-green-400/25"
+                className="group relative px-8 py-4 bg-gradient-to-r from-green-400 to-cyan-400 text-black font-semibold rounded-xl overflow-hidden transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:shadow-green-400/30"
               >
-                <Cpu className="w-5 h-5 mr-2 group-hover:rotate-180 transition-transform duration-500" />
-                AI 프로젝트 탐색
-              </Button>
-              <Button 
-                variant="outline" 
-                size="lg" 
-                className="group border-green-400/50 text-green-400 hover:bg-green-400/10 neon-border"
+                <span className="relative z-10 flex items-center justify-center gap-2">
+                  <Cpu className="w-5 h-5 group-hover:rotate-180 transition-transform duration-500" />
+                  AI 프로젝트 탐색
+                </span>
+                <div className="absolute inset-0 bg-gradient-to-r from-green-500 to-cyan-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              </button>
+              
+              <button 
+                className="group relative px-8 py-4 border border-green-400/30 text-green-400 font-semibold rounded-xl overflow-hidden backdrop-blur-sm transition-all duration-300 hover:border-green-400/50 hover:shadow-lg hover:shadow-green-400/20"
               >
-                <Bot className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform pulse-ai" />
-                AI 연구소 접속
-              </Button>
+                <span className="relative z-10 flex items-center justify-center gap-2">
+                  <Bot className="w-5 h-5 group-hover:scale-110 transition-transform" />
+                  AI 연구소 접속
+                </span>
+                <div className="absolute inset-0 bg-gradient-to-r from-green-400/5 to-cyan-400/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              </button>
             </motion.div>
           </motion.div>
 
@@ -158,14 +175,15 @@ const Hero = () => {
             transition={{ delay: 0.4, duration: 0.8 }}
           >
             <div className="relative">
-              {/* Background Gradient Circle */}
-              <div className="absolute inset-0 bg-gradient-to-br from-cyan-400 to-purple-600 rounded-full blur-2xl opacity-20 scale-110"></div>
+              {/* Enhanced Background Effects */}
+              <div className="absolute inset-0 bg-gradient-to-br from-green-400/20 via-cyan-400/10 to-purple-600/20 rounded-full blur-3xl scale-125 animate-pulse"></div>
+              <div className="absolute inset-0 bg-gradient-to-tr from-cyan-400/10 to-purple-600/10 rounded-full blur-2xl scale-110 animation-delay-2000 animate-pulse"></div>
               
-              {/* AI Avatar Container */}
+              {/* Enhanced AI Avatar Container */}
               <motion.div 
-                className="relative w-80 h-80 lg:w-96 lg:h-96 rounded-full flex items-center justify-center bg-gradient-to-br from-green-400/20 via-cyan-500/20 to-purple-600/20 border-2 border-green-400/50 shadow-2xl shadow-green-400/20 neon-border overflow-hidden"
-                whileHover={{ scale: 1.05 }}
-                transition={{ type: "spring", stiffness: 300, damping: 30 }}
+                className="relative w-80 h-80 lg:w-96 lg:h-96 rounded-full flex items-center justify-center bg-gradient-to-br from-[var(--surface-glass)] to-[var(--surface-dark)] border border-green-400/20 shadow-2xl shadow-green-400/10 backdrop-blur-xl overflow-hidden"
+                whileHover={{ scale: 1.02 }}
+                transition={{ type: "spring", stiffness: 400, damping: 25 }}
               >
                 {/* Profile Image with AI Effects */}
                 <div className="relative w-full h-full">
@@ -207,27 +225,38 @@ const Hero = () => {
                 />
               </motion.div>
 
-              {/* Floating Elements */}
+              {/* Enhanced Floating Elements */}
               <motion.div
-                className="absolute -top-4 -right-4 bg-gradient-to-r from-green-400/20 to-cyan-500/20 p-3 rounded-2xl shadow-lg border border-green-400/50 neon-border"
+                className="absolute -top-6 -right-6 bg-gradient-to-br from-green-400/10 to-cyan-400/10 p-4 rounded-2xl backdrop-blur-md border border-green-400/20 shadow-xl"
                 animate={{ 
-                  y: [0, -10, 0],
-                  rotate: [0, 360]
+                  y: [0, -15, 0],
+                  rotate: [0, 10, -10, 0]
                 }}
-                transition={{ duration: 3, repeat: Infinity }}
+                transition={{ duration: 4, repeat: Infinity, ease: "easeInOut" }}
               >
-                <Brain className="w-6 h-6 text-green-400 neon-glow" />
+                <Brain className="w-6 h-6 text-green-400" />
               </motion.div>
 
               <motion.div
-                className="absolute -bottom-4 -left-4 bg-gradient-to-r from-purple-600/20 to-cyan-500/20 p-3 rounded-2xl shadow-lg border border-purple-600/50 neon-border"
+                className="absolute -bottom-6 -left-6 bg-gradient-to-br from-purple-600/10 to-cyan-400/10 p-4 rounded-2xl backdrop-blur-md border border-purple-600/20 shadow-xl"
                 animate={{ 
-                  y: [0, 10, 0],
-                  scale: [1, 1.2, 1]
+                  y: [0, 15, 0],
+                  scale: [1, 1.1, 1]
                 }}
-                transition={{ duration: 3, repeat: Infinity, delay: 1 }}
+                transition={{ duration: 4, repeat: Infinity, delay: 2, ease: "easeInOut" }}
               >
-                <Cpu className="w-6 h-6 text-purple-400 neon-glow" />
+                <Cpu className="w-6 h-6 text-purple-400" />
+              </motion.div>
+              
+              <motion.div
+                className="absolute top-1/2 -right-8 bg-gradient-to-br from-cyan-400/10 to-green-400/10 p-3 rounded-xl backdrop-blur-md border border-cyan-400/20"
+                animate={{ 
+                  x: [0, 10, 0],
+                  rotate: [0, -10, 10, 0]
+                }}
+                transition={{ duration: 5, repeat: Infinity, delay: 1, ease: "easeInOut" }}
+              >
+                <Zap className="w-5 h-5 text-cyan-400" />
               </motion.div>
             </div>
           </motion.div>
