@@ -5,6 +5,7 @@ import { motion } from 'framer-motion';
 import { Menu, X, Phone, Mail, Bot, Brain, Cpu, Sparkles } from 'lucide-react';
 import Button from '@/components/ui/Button';
 import { profileData } from '@/data/profile';
+import AILabIcon from '@/components/icons/AILabIcon';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -53,23 +54,7 @@ const Header = () => {
               onClick={() => scrollToSection('#home')}
               whileHover={{ scale: 1.05 }}
             >
-              <div className="relative">
-                <div className="w-10 h-10 bg-gradient-to-br from-green-400 via-cyan-500 to-purple-600 rounded-xl flex items-center justify-center shadow-lg shadow-cyan-500/25">
-                  <span className="text-2xl">🤖</span>
-                </div>
-                <motion.div 
-                  className="absolute -top-1 -right-1 w-3 h-3 bg-green-400 rounded-full"
-                  animate={{ 
-                    scale: [1, 1.2, 1],
-                    opacity: [1, 0.5, 1]
-                  }}
-                  transition={{ 
-                    duration: 2,
-                    repeat: Infinity,
-                    ease: "easeInOut"
-                  }}
-                />
-              </div>
+              <AILabIcon size={48} animated={false} />
               <div>
                 <div className="font-bold text-xl bg-gradient-to-r from-green-400 to-cyan-500 bg-clip-text text-transparent">
                   AI 코드 연구소
@@ -153,9 +138,7 @@ const Header = () => {
             {/* Header */}
             <div className="flex items-center justify-between p-6 border-b border-gray-100">
               <div className="flex items-center gap-3">
-                <div className="w-8 h-8 bg-gradient-to-br from-green-400 via-cyan-500 to-purple-600 rounded-lg flex items-center justify-center">
-                  <span className="text-xl">🤖</span>
-                </div>
+                <AILabIcon size={40} animated={false} />
                 <div>
                   <div className="font-bold bg-gradient-to-r from-green-400 to-cyan-500 bg-clip-text text-transparent">AI 코드 연구소</div>
                   <div className="text-xs text-gray-500">AI Development Lab</div>

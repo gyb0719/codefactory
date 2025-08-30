@@ -15,6 +15,11 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "AI 코드 연구소 | AI 엔지니어 & 풀스택 연구원",
   description: "🤖 최첨단 AI 기술로 미래를 코딩하는 연구소입니다. ChatGPT, Claude, GitHub Copilot을 활용한 차세대 개발.",
+  icons: {
+    icon: '/ai-lab-icon.svg',
+    shortcut: '/ai-lab-icon.svg',
+    apple: '/ai-lab-icon.svg',
+  },
 };
 
 export default function RootLayout({

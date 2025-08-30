@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { ChevronDown, Code2, Sparkles, Zap, Bot, Brain, Cpu, Terminal } from 'lucide-react';
 import Button from '@/components/ui/Button';
 import { profileData } from '@/data/profile';
+import AILabIcon from '@/components/icons/AILabIcon';
 
 const Hero = () => {
   const [text, setText] = useState('');
@@ -77,13 +78,13 @@ const Hero = () => {
                   안녕하세요,
                 </span>
                 <div className="space-y-2">
-                  <span className="inline-flex items-center gap-4">
-                    <span className="text-6xl lg:text-8xl animate-bounce-slow">🤖</span>
+                  <span className="inline-flex items-center gap-6">
+                    <AILabIcon size={100} animated={true} />
                     <span className="text-5xl lg:text-7xl font-black bg-gradient-to-r from-green-400 via-cyan-400 to-purple-500 bg-clip-text text-transparent animate-gradient-shift bg-[length:200%_200%]">
                       {profileData.name}
                     </span>
                   </span>
-                  <span className="block text-4xl lg:text-5xl font-bold text-[var(--text-secondary)]">
+                  <span className="block text-4xl lg:text-5xl font-bold text-[var(--text-secondary)] ml-28">
                     입니다.
                   </span>
                 </div>
